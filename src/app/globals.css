@@ -1,0 +1,67 @@
+@import "tailwindcss";
+@config "../../tailwind.config.js";
+
+@layer base {
+	input:-webkit-autofill {
+		box-shadow: 0 0 0px 1000px theme(--color-white) inset;
+	}
+}
+/* todo */
+
+:root {
+	--background: #ffffff;
+	--black: #141718;
+	--white: #ffffff;
+	--description-grey: #6c7275;
+	--description-white: #fefefe;
+	--subtitle: #3e3e59;
+	--white-grey: #e8ecef;
+	--not-active: #6c7275;
+	--action: #377dff;
+	--grey: #f3f5f7;
+}
+
+body {
+	color: var(--foreground);
+	background: var(--background);
+}
+
+input[type="radio"] {
+	appearance: none;
+	-webkit-appearance: none;
+	width: 18px;
+	height: 18px;
+	border: 1px solid var(--black);
+	border-radius: 50%;
+	display: grid;
+	place-content: center;
+	cursor: pointer;
+}
+
+input[type="radio"]::before {
+	content: "";
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	transform: scale(0);
+	transition: transform 0.2s ease;
+	background: var(--black);
+}
+
+input[type="radio"]:checked::before {
+	transform: scale(1);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+	height: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+	background: #e8ecef;
+	border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+	background: #343839;
+	border-radius: 10px;
+}
