@@ -14,7 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import { paymentService } from "@/services/requests/payment/payment.services";
 import { PaymentMethod } from "./PaymentMethod";
 import { AddressMode } from "./AddressMode";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCreateAddress } from "@/features/address/hook/useCreateAddress";
 import { useRouter } from "next/navigation";
 import { PAGE } from "@/config";
