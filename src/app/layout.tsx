@@ -21,6 +21,8 @@ const geistInter = Inter({
 	variable: "--font-inter",
 });
 
+console.log(process.env.NEXT_PUBLIC_BACKEND_URL)
+
 export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
 
 	return (
