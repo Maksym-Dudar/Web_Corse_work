@@ -174,7 +174,7 @@ export function CheckoutPage() {
 				</form>
 				<OderSummary
 					data={orderData?.orderItem || []}
-					shippingMethod={orderData.shippingMethod}
+					shippingMethod={orderData?.shippingMethod}
 					total={orderData?.total || 0}
 					subtotal={orderData?.subtotal || 0}
 				/>
