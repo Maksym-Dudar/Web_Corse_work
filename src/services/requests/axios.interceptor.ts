@@ -1,9 +1,8 @@
 import axios from "axios";
 import type { MassageResponse } from "./type";
-import { NEXT_PUBLIC_BACKEND_URL } from "@/config/env";
 
 export const instance = axios.create({
-	baseURL: NEXT_PUBLIC_BACKEND_URL,
+	baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
 	withCredentials: true,
 });
 
