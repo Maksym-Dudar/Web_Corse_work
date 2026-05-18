@@ -14,7 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import { paymentService } from "@/services/requests/payment/payment.services";
 import { PaymentMethod } from "./PaymentMethod";
 import { AddressMode } from "./AddressMode";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useCreateAddress } from "@/features/address/hook/useCreateAddress";
 import { useRouter } from "next/navigation";
 import { PAGE } from "@/config";
@@ -134,12 +134,7 @@ export function CheckoutPage() {
 
 	if (isLoading) return <Loading />;
 if (!orderData) return null;
-	
-	useEffect(() => {
-	if (!orderData) {
-		router.push(PAGE.CART.link);
-	}
-}, [orderData, router]);
+
 
 	return (
 		<>
