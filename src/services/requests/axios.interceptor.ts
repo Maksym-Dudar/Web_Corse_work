@@ -2,7 +2,7 @@ import axios from "axios";
 import type { MassageResponse } from "./type";
 
 export const instance = axios.create({
-	baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
+	baseURL: "/api",
 	withCredentials: true,
 });
 
