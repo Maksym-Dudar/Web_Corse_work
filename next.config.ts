@@ -5,6 +5,14 @@ const nextConfig: NextConfig = {
 	images: {
 		unoptimized: true,
 	},
+	  rewrites: async () => {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "https://webcorseworkbakend.up.railway.app/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;
