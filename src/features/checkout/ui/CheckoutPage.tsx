@@ -133,12 +133,13 @@ export function CheckoutPage() {
 	});
 
 	if (isLoading) return <Loading />;
-
+if (!orderData) return null;
+	
 	useEffect(() => {
-	if (!isLoading && (!orderData || !orderData.id)) {
+	if (!orderData) {
 		router.push(PAGE.CART.link);
 	}
-}, [isLoading, orderData, router]);
+}, [orderData, router]);
 
 	return (
 		<>
