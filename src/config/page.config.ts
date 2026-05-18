@@ -18,10 +18,10 @@ class PagesConfig {
 		link: "/shop",
 		label: "Магазин",
 	};
-	BLOG: IPage = {
-		link: "/blog",
-		label: "Блог",
-	};
+	// BLOG: IPage = {
+	// 	link: "/blog",
+	// 	label: "Блог",
+	// };
 	CONTACT_US: IPage = {
 		link: "/contact-us",
 		label: "Контакти",
@@ -118,5 +118,5 @@ class PagesConfig {
 
 export const PAGE = new PagesConfig();
 
-export const NAVIGATION = [PAGE.HOME, PAGE.SHOP, PAGE.BLOG, PAGE.CONTACT_US];
+export const NAVIGATION = [PAGE.HOME, PAGE.SHOP, PAGE.CONTACT_US];
 export const TERMS_PRIVACY = [PAGE.PRIVACY_POLICY, PAGE.TERMS_OF_USE];
