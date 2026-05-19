@@ -50,6 +50,7 @@ export function useCheckout() {
 		[],
 	);
 	return {
+		orderId,
 		orderData,
 		addressData,
 		userData,

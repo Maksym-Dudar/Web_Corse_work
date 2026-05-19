@@ -25,11 +25,12 @@ import {
 } from "@stripe/react-stripe-js";
 import { ordersService } from "@/services/requests";
 import type { IConfirmOrder } from "@/services/requests/orders/requests.type";
+import { usePayment } from "../hook/usePayment";
 
 export type TAddressMode = "existing" | "new";
 
 export function CheckoutPage() {
-	const {
+	const {orderId,
 		orderData,
 		addressData,
 		userData,
@@ -60,10 +61,8 @@ export function CheckoutPage() {
 	const stripe = useStripe();
 	const elements = useElements();
 
-	const paymentMutation = useMutation({
-		mutationFn: (orderId: number) =>
-			paymentService.getClientSecret({ orderId: orderId }), // todo
-	});
+	const { data: paymentData } = usePayment(orderId);
+
 
 	const orderMutation = useMutation({
 		mutationFn: (payload: IConfirmOrder) => ordersService.confirmOrder(payload),
@@ -85,7 +84,7 @@ export function CheckoutPage() {
 	const { createAddressMutation } = useCreateAddress();
 
 	const submit = handleSubmit(async (data) => {
-		if (!orderData?.id) return;
+		if (!orderData?.id || !paymentData) return;
 
 		if (!stripe || !elements) {
 			setPaymentError(new Error("Stripe not loaded"));
@@ -115,9 +114,8 @@ export function CheckoutPage() {
 			setAddressId(res.id);
 		}
 
-		const { clientSecret } = await paymentMutation.mutateAsync(orderData.id);
 
-		const result = await stripe.confirmCardPayment(clientSecret, {
+		const result = await stripe.confirmCardPayment(paymentData?.clientSecret, {
 			payment_method: {
 				card: cardElement!,
 				billing_details: {

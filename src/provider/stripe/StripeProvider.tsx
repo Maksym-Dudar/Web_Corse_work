@@ -1,5 +1,6 @@
 "use client";
 
+import { usePayment } from "@/features/checkout/hook/usePayment";
 import { paymentService } from "@/services/requests/payment/payment.services";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -16,15 +17,7 @@ export default function PaymentProvider({
 	children: React.ReactNode;
 	orderId: number;
 }) {
-	const { data, isLoading, error } = useQuery({
-		queryKey: ["order", orderId],
-		queryFn: () =>
-			paymentService.getClientSecret({ orderId }),
-		enabled: !!orderId,
-		retry: 1,
-		staleTime: Infinity,
-refetchOnWindowFocus: false,
-	});
+	const { data, isLoading, error } = usePayment(orderId);
 
 	console.log("payment data:", data);
 	console.log("payment error:", error);
