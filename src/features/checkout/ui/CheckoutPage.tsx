@@ -83,8 +83,19 @@ export function CheckoutPage() {
 		reset({ ...restAddress, ...restUser });
 	};
 	const { createAddressMutation } = useCreateAddress();
+
 	const submit = handleSubmit(async (data) => {
-		if (!orderData || !orderData.id || !stripe || !elements) return;
+		if (!orderData?.id) return;
+
+		if (!stripe || !elements) {
+			setPaymentError(new Error("Stripe not loaded"));
+			return;
+		}
+		const cardElement = elements.getElement(CardNumberElement);
+		if (!cardElement) {
+			setPaymentError(new Error("Card element not found"));
+			return;
+		}
 		let finalAddressId = addressId;
 
 		if (!finalAddressId) {
@@ -105,8 +116,6 @@ export function CheckoutPage() {
 		}
 
 		const { clientSecret } = await paymentMutation.mutateAsync(orderData.id);
-
-		const cardElement = elements.getElement(CardNumberElement);
 
 		const result = await stripe.confirmCardPayment(clientSecret, {
 			payment_method: {
@@ -132,21 +141,13 @@ export function CheckoutPage() {
 		}
 	});
 
-			console.log("stripe:", stripe);
-		console.log("elements:", elements);
-		if (!stripe || !elements) {
-			return <div>Stripe loading...</div>;
-		}
-
+	console.log("stripe:", stripe);
+	console.log("elements:", elements);
 
 	if (isLoading) return <Loading />;
-if (!orderData) {
-	return (
-		<div className="py-20 text-center">
-			Order not found
-		</div>
-	);
-}
+	if (!orderData) {
+		return <div className='py-20 text-center'>Order not found</div>;
+	}
 
 	return (
 		<>
@@ -154,7 +155,7 @@ if (!orderData) {
 				<ErrorToast message={errorMessage} onClose={closeError} />
 			)}
 			<div className='flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-12 xl:gap-16 py-10 md:py-15 lg:py-20 '>
-		befor
+				befor
 				<form className='flex flex-col w-full gap-6' onSubmit={submit}>
 					after
 					<AddressMode

@@ -9,18 +9,18 @@ import {
 import { WalletPayment } from "./WalletPayment";
 
 const elementStyle = {
-    base: {
-        position: "absolute",
-        fontSize: "16px",
-        color: "#000",
-        "::placeholder": { color: "#aaa" },
-        height: "30px",
-        padding: "5px 16px",
-    },
-    invalid: {
-        color: "#fa755a",
-    },
+	base: {
+		fontSize: "16px",
+		color: "#000",
+		"::placeholder": {
+			color: "#aaa",
+		},
+	},
+	invalid: {
+		color: "#fa755a",
+	},
 };
+
 export function PaymentMethod() {
 
 	return (
