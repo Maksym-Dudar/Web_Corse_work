@@ -133,8 +133,13 @@ export function CheckoutPage() {
 	});
 
 	if (isLoading) return <Loading />;
-if (!orderData) return null;
-
+if (!orderData) {
+	return (
+		<div className="py-20 text-center">
+			Order not found
+		</div>
+	);
+}
 
 	return (
 		<>
