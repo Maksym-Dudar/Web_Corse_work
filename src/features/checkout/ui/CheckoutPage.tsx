@@ -147,7 +147,9 @@ if (!orderData) {
 				<ErrorToast message={errorMessage} onClose={closeError} />
 			)}
 			<div className='flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-12 xl:gap-16 py-10 md:py-15 lg:py-20 '>
+		befor
 				<form className='flex flex-col w-full gap-6' onSubmit={submit}>
+					after
 					<AddressMode
 						options={addressOptions}
 						handleAddressSelect={handleAddressSelect}
