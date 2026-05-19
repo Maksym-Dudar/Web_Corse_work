@@ -17,10 +17,11 @@ export default function PaymentProvider({
 	const { data } = useQuery({
 		queryKey: ["order", orderId],
 		queryFn: () => paymentService.getClientSecret({ orderId }),
+		enabled: !!orderId,
+		retry: 3,
+		retryDelay: 1000,
 	});
 
-	
-	console.log("pay data:", data);
 	if (!data || !data?.clientSecret) return
 	
 	return (
