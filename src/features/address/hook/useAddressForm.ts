@@ -31,14 +31,16 @@ export function useAddressForm({ id }: Props) {
 				),
 		[],
 	);
-	const {createAddressMutation} = useCreateAddress();
-	const updateAddressMutation = useMutation({
+	const createAddressMutation = useMutation({
+		mutationFn: (payload: IAddressBase) =>
+			addressService.createAddress(payload),
+	});	const updateAddressMutation = useMutation({
 		mutationFn: (payload: UpdateAddressPayload) =>
 			addressService.updateAddress(payload),
   });
   
-  const createAddress = (data: IAddressBase) => createAddressMutation.mutate(data);
-  const updateAddress = (data: UpdateAddressPayload) => updateAddressMutation.mutate(data);
+  const createAddress = (data: IAddressBase) => createAddressMutation.mutateAsync(data);
+  const updateAddress = (data: UpdateAddressPayload) => updateAddressMutation.mutateAsync(data);
   return {
 		data,
 		options,
