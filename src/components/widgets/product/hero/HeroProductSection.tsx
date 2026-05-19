@@ -24,8 +24,7 @@ export function HeroProductSection() {
 		queryKey: ["product", id],
 		queryFn: ({ signal }) => productService.getDetails(id, signal),
 		enabled: Number.isFinite(id),
-    });
-    console.log(data)
+	});
 
 	const { errorMessage, closeError } = useErrorToast(error, isError);
 
@@ -44,13 +43,11 @@ export function HeroProductSection() {
 				<div className='flex flex-col w-full'>
 					<HeaderProduct category={data.category[0]} nameProduct={data.title} />
 					<div className='flex flex-col md:flex-row w-full justify-between gap-8 sm:gap-10 md:gap-12 lg:gap-14 xl:gap-16'>
-						{data && (
 							<SwiperSectionProduct
 								images={data.image || []}
 								isNew={data.isNew}
 								sale={data.sale}
 							/>
-						)}
 						<div className='flex flex-col w-full md:w-1/2'>
 							<InfoProduct
 								name={data.title}

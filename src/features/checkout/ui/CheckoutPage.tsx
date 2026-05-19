@@ -11,7 +11,6 @@ import { useCheckout } from "../hook/useCheckout";
 import { Loading } from "@/components/widgets";
 import { useErrorToast } from "@/hooks/useErrorToast";
 import { useMutation } from "@tanstack/react-query";
-import { paymentService } from "@/services/requests/payment/payment.services";
 import { PaymentMethod } from "./PaymentMethod";
 import { AddressMode } from "./AddressMode";
 import { useState } from "react";
@@ -30,7 +29,8 @@ import { usePayment } from "../hook/usePayment";
 export type TAddressMode = "existing" | "new";
 
 export function CheckoutPage() {
-	const {orderId,
+	const {
+		orderId,
 		orderData,
 		addressData,
 		userData,
@@ -63,7 +63,6 @@ export function CheckoutPage() {
 
 	const { data: paymentData } = usePayment(orderId);
 
-
 	const orderMutation = useMutation({
 		mutationFn: (payload: IConfirmOrder) => ordersService.confirmOrder(payload),
 	});
@@ -84,7 +83,17 @@ export function CheckoutPage() {
 	const { createAddressMutation } = useCreateAddress();
 
 	const submit = handleSubmit(async (data) => {
-		if (!orderData?.id || !paymentData) return;
+		setPaymentError(null);
+
+		if (!orderData?.id) {
+			setPaymentError(new Error("Замовлення не знайдено"));
+			return;
+		}
+
+		if (!paymentData?.clientSecret) {
+			setPaymentError(new Error("Не вдалося підготувати оплату"));
+			return;
+		}
 
 		if (!stripe || !elements) {
 			setPaymentError(new Error("Stripe not loaded"));
@@ -114,33 +123,30 @@ export function CheckoutPage() {
 			setAddressId(res.id);
 		}
 
-
-		const result = await stripe.confirmCardPayment(paymentData?.clientSecret, {
+		const result = await stripe.confirmCardPayment(paymentData.clientSecret, {
 			payment_method: {
-				card: cardElement!,
+				card: cardElement,
 				billing_details: {
 					name: `${data.firstName} ${data.lastName}`,
 					email: data.email,
 				},
 			},
 		});
-		if (result.error) {
-			setPaymentError(new Error(result.error.message));
-			return;
-		} else {
-			await orderMutation.mutateAsync({
-				id: orderData.id,
-				addressId: finalAddressId,
-				firstName: data.firstName,
-				lastName: data.lastName,
-				email: data.email,
-			});
-			router.push(PAGE.CHECKOUT_COMPLETE(orderData.id));
-		}
-	});
 
-	console.log("stripe:", stripe);
-	console.log("elements:", elements);
+		if (result.error) {
+			setPaymentError(new Error(result.error.message ?? "Помилка оплати"));
+			return;
+		}
+
+		await orderMutation.mutateAsync({
+			id: orderData.id,
+			addressId: finalAddressId,
+			firstName: data.firstName,
+			lastName: data.lastName,
+			email: data.email,
+		});
+		router.push(PAGE.CHECKOUT_COMPLETE(orderData.id));
+	});
 
 	if (isLoading) return <Loading />;
 	if (!orderData) {
@@ -153,11 +159,10 @@ export function CheckoutPage() {
 				<ErrorToast message={errorMessage} onClose={closeError} />
 			)}
 			<div className='flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-12 xl:gap-16 py-10 md:py-15 lg:py-20 '>
-				befor
 				<form className='flex flex-col w-full gap-6' onSubmit={submit}>
-					after
 					<AddressMode
 						options={addressOptions}
+						selectedAddressId={addressId}
 						handleAddressSelect={handleAddressSelect}
 						addressMode={addressMode}
 						onCreateAddress={() => {
@@ -169,14 +174,14 @@ export function CheckoutPage() {
 					<ContactInformation
 						register={register}
 						errors={errors}
-						disabled={addressMode == "existing"}
+						disabled={addressMode === "existing"}
 					/>
 					<ShippingAddress
 						register={register}
 						errors={errors}
 						control={control}
 						options={countryOptions}
-						disabled={addressMode == "existing"}
+						disabled={addressMode === "existing"}
 					/>
 					<PaymentMethod />
 					<Button text='Оформити замовлення' type='submit' className='py-3' />

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import { Suspense, type PropsWithChildren } from "react";
 import { OverlayProvider, QueryProvider } from "@/provider";
-import './globals.css';
+import "./globals.css";
 
 export const metadata: Metadata = {
 	title: "3Legant",
@@ -21,10 +21,7 @@ const geistInter = Inter({
 	variable: "--font-inter",
 });
 
-console.log(process.env.NEXT_PUBLIC_BACKEND_URL)
-
 export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
-
 	return (
 		<html lang='uk'>
 			<body

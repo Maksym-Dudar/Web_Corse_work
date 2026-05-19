@@ -1,9 +1,9 @@
 "use client";
 
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { CreateProductSchema } from "../../model/create-product.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
 	Button,
 	ErrorToast,
@@ -21,7 +21,6 @@ import { Loading } from "@/components/widgets";
 import { BackendCategory, Category } from "@/config/product.config";
 import Image from "next/image";
 import { FieldError } from "@/components/ui/inputs/FieldError";
-import { useRouter } from "next/navigation";
 
 export const optionCreate = {
 	label: "Створити",
@@ -33,10 +32,13 @@ export function CreateProduct() {
 		register,
 		control,
 		handleSubmit,
-		watch,
 		formState: { errors },
 	} = useForm<CreateProductSchema>({
 		resolver: zodResolver(CreateProductSchema),
+		defaultValues: {
+			isNew: false,
+			category: [],
+		},
 	});
 
 	const { data, isError, isLoading, error } = useQuery({
@@ -44,7 +46,6 @@ export function CreateProduct() {
 		queryFn: () => productService.getProductGroup(),
 	});
 
-	const [imagesPreview, setImagesPreview] = useState<string[]>([]);
 	const [haveSale, setHaveSale] = useState<boolean>(false);
 	const { errorMessage, closeError } = useErrorToast(
 		error,
@@ -65,44 +66,48 @@ export function CreateProduct() {
 		{ label: Category.Office, value: BackendCategory.Office },
 	];
 
-	const images = watch("images");
+	const images = useWatch({ control, name: "images" });
+	const productGroupId = useWatch({ control, name: "productGroupId" });
+
+	const imagesPreview = useMemo(() => {
+		if (!images?.length) {
+			return [];
+		}
+
+		return Array.from(images).map((file) => URL.createObjectURL(file));
+	}, [images]);
 
 	useEffect(() => {
-		if (!images) return;
-		const imageUrls = Array.from(images).map((file) =>
-			URL.createObjectURL(file),
-		);
-		setImagesPreview(imageUrls);
-	}, [watch("images")]);
+		if (!imagesPreview.length) return;
+
+		return () => {
+			imagesPreview.forEach((url) => URL.revokeObjectURL(url));
+		};
+	}, [imagesPreview]);
 
 	const createProductMutation = useMutation({
 		mutationFn: (payload: FormData) => productService.createProduct(payload),
 	});
 
-	const submit = handleSubmit(
-		async (payload: Record<string, any>) => {
-			const formData = new FormData();
+	const submit = handleSubmit(async (payload) => {
+		const formData = new FormData();
 
-			Object.entries(payload).forEach(([key, value]) => {
-				if (key === "images" && value instanceof FileList) {
-					Array.from(value).forEach((file) => {
-						formData.append("images", file);
-					});
-				} else if (Array.isArray(value)) {
-					value.forEach((v) => formData.append(key, String(v)));
-				} else {
-					formData.append(key, String(value));
-				}
-			});
+		Object.entries(payload).forEach(([key, value]) => {
+			if (key === "images" && value instanceof FileList) {
+				Array.from(value).forEach((file) => {
+					formData.append("images", file);
+				});
+			} else if (Array.isArray(value)) {
+				value.forEach((v) => formData.append(key, String(v)));
+			} else if (value instanceof Date) {
+				formData.append(key, value.toISOString());
+			} else if (value !== undefined && value !== null) {
+				formData.append(key, String(value));
+			}
+		});
 
-			const res = await createProductMutation.mutateAsync(formData);
-
-			return;
-		},
-		(errors) => {
-			console.log("ERRORS", errors);
-		},
-	);
+		await createProductMutation.mutateAsync(formData);
+	});
 
 	if (isLoading) return <Loading />;
 
@@ -182,7 +187,7 @@ export function CreateProduct() {
 							label='НАЗВА ТОВАРУ'
 							placeholder='Назва товару'
 							errorMessage={errors.title?.message}
-							disabled={watch("productGroupId") != optionCreate.value}
+							disabled={productGroupId === undefined}
 							{...register("title")}
 						/>
 						<h6 className='text-16 sm:text-18 lg:text-20 font-500 leading-140 pb-2'>

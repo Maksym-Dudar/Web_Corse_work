@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "@/components/ui/buttons/Button";
 import Input from "@/components/ui/inputs/Input";
@@ -14,9 +14,10 @@ import { useErrorToast } from "@/hooks/useErrorToast";
 export function ForgotPassword() {
 	const {
 		register,
+		control,
 		handleSubmit,
+		trigger,
 		formState: { errors },
-		watch,
 	} = useForm<ForgotPasswordSchema>({
 		resolver: zodResolver(ForgotPasswordSchema),
 	});
@@ -26,9 +27,15 @@ export function ForgotPassword() {
 	const { errorMessage, closeError } = useErrorToast(error, isError);
 
 	const onSubmit = handleSubmit((data: ForgotPasswordSchema) => submit(data));
-	const email = watch("email");
+	const email = useWatch({ control, name: "email" });
 
-	const onSendCode = () => generateOtp({ email });
+	const onSendCode = async () => {
+		const isEmailValid = await trigger("email");
+
+		if (isEmailValid) {
+			generateOtp({ email });
+		}
+	};
 	return (
 		<>
 			{!!errorMessage && (

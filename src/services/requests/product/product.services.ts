@@ -31,7 +31,6 @@ class ProductService {
 			params: { id },
 			signal,
 		});
-		console.log(res);
 		return {
 			...res.data,
 			offerExpires: new Date(res.data.offerExpires),
@@ -55,7 +54,6 @@ class ProductService {
 		signal?: AbortSignal,
 	): Promise<ICartItem[]> {
 		const params = products.join(",");
-		console.log(params);
 		const res = (await instance.get(API.PRODUCT_BAG, { params: { ids: params }, signal }));
 		return res.data;
 	}

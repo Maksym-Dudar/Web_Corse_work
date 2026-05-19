@@ -9,7 +9,7 @@ class AddressService {
 		return (await instance.get(API.ADDRESS)).data;
 	}
 	async getAddress(id: number): Promise<IAddress> {
-		return (await instance.put(API.getAddressById(id))).data;
+		return (await instance.get(API.getAddressById(id))).data;
 	}
 	async createAddress(payload: IAddressBase): Promise<IAddress> {
 		return (await instance.post(API.ADDRESS, payload)).data;

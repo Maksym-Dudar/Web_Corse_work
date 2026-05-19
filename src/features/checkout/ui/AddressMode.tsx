@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
 import Radio from "@/components/ui/inputs/Radio";
 import CustomSelect from "@/components/ui/select/CustomSelect";
 import type { SelectOption } from "@/components/ui/select/type";
 import type { TAddressMode } from "./CheckoutPage";
 
-
 interface Props {
 	addressMode: TAddressMode;
 	options: SelectOption<number>[];
+	selectedAddressId: number | null;
 	handleAddressSelect: (addressId: number) => void;
 	onCreateAddress: () => void;
 	onExistingAddress: () => void;
@@ -17,6 +17,7 @@ interface Props {
 export function AddressMode({
 	addressMode,
 	options,
+	selectedAddressId,
 	handleAddressSelect,
 	onCreateAddress,
 	onExistingAddress,
@@ -27,12 +28,12 @@ export function AddressMode({
 			<Radio
 				label='Створити адресу'
 				name='address-settings'
-				checked={addressMode == "new"}
+				checked={addressMode === "new"}
 				onChange={onCreateAddress}
 			/>
 			<Radio
 				label='Використати наявну адресу'
-				checked={addressMode == "existing"}
+				checked={addressMode === "existing"}
 				name='address-settings'
 				onChange={onExistingAddress}
 			/>
@@ -41,8 +42,8 @@ export function AddressMode({
 				placeholder='Оберіть адресу'
 				styleType='outlined'
 				options={options}
-				value={null}
-				isDisabled={addressMode != "existing"}
+				value={options.find((option) => option.value === selectedAddressId) ?? null}
+				isDisabled={addressMode !== "existing"}
 				onChange={(item) => {
 					if (item) handleAddressSelect(item.value);
 				}}

@@ -6,7 +6,6 @@ import {
 	CardExpiryElement,
 	CardCvcElement,
 } from "@stripe/react-stripe-js";
-import { WalletPayment } from "./WalletPayment";
 
 const elementStyle = {
 	base: {
@@ -22,7 +21,6 @@ const elementStyle = {
 };
 
 export function PaymentMethod() {
-
 	return (
 		<section className='flex flex-col border-1 border-description_gray rounded-lg pt-10 pb-6 px-6 gap-6'>
 			<h5 className='text-20 font-500 leading-140 pb-2'>Спосіб оплати</h5>
@@ -59,7 +57,6 @@ export function PaymentMethod() {
 					</div>
 				</div>
 			</div>
-			<WalletPayment />
 		</section>
 	);
 }

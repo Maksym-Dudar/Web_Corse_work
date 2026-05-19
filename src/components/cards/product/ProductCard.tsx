@@ -29,7 +29,6 @@ export function ProductCard({
 	} = useProductCard({ id });
 	const { addProduct } = useCartStore();
 
-	console.log(image);
 	return (
 		<article
 			className='w-full h-auto'
@@ -49,7 +48,7 @@ export function ProductCard({
 					isActive={isInWishlist}
 					onClick={toggleWishlist}
 				/>
-				<div className='absolute bottom-2 md:bottom-4w-full px-2 md:px-4 w-full'>
+				<div className='absolute bottom-2 md:bottom-4 px-2 md:px-4 w-full'>
 					<Button
 						ref={buttonRef}
 						text={"Додати в кошик"}

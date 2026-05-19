@@ -4,11 +4,12 @@ import { z } from "zod";
 export const CreateProductSchema = z.object({
 	productGroupId: z.number(),
 	isNew: z.boolean(),
-	offerExpires: z.date(),
+	offerExpires: z.date().optional(),
 	sale: z
 		.number()
 		.max(1, "Введіть значення від 0 до 1")
-		.min(0, "Введіть значення від 0 до 1"),
+		.min(0, "Введіть значення від 0 до 1")
+		.optional(),
 	title: z.string().nonempty("Це поле обов'язкове"),
 	measurements: z.string().nonempty("Це поле обов'язкове"),
 	price: z.number().min(0, "Це поле обов'язкове"),

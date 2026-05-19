@@ -1,5 +1,10 @@
 import { Input } from "@/components/ui";
-import { type UseFormRegister, type FieldErrors, Controller, type Control } from "react-hook-form";
+import {
+	type UseFormRegister,
+	type FieldErrors,
+	Controller,
+	type Control,
+} from "react-hook-form";
 import type { CheckoutSchema } from "../model/checkout.schema";
 import CustomSelect from "@/components/ui/select/CustomSelect";
 import type { SelectOption } from "@/components/ui/select/type";
@@ -8,8 +13,8 @@ interface Props {
 	register: UseFormRegister<CheckoutSchema>;
 	errors: FieldErrors<CheckoutSchema>;
 	control: Control<CheckoutSchema>;
-    options: SelectOption<string>[];
-    disabled: boolean;
+	options: SelectOption<string>[];
+	disabled: boolean;
 }
 
 export function ShippingAddress({
@@ -42,9 +47,10 @@ export function ShippingAddress({
 						options={options}
 						styleType='outlined'
 						onChange={(option) => field.onChange(option?.value)}
-						value={null}
+						value={options.find((option) => option.value === field.value) ?? null}
 						errorMessage={errors.country?.message}
 						isCanHaveError={true}
+						isDisabled={disabled}
 					/>
 				)}
 			/>

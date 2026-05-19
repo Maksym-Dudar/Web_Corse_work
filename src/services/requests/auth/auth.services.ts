@@ -2,7 +2,12 @@ import { API } from "@/config/api.config";
 import { instance } from "../axios.interceptor";
 import type { IUser } from "@/shared/types/user/user.type";
 import type { MassageResponse } from "../type";
-import type { IForgotPassword, IGenerateOtp, ISignIn, ISignUp } from "@/shared/types/auth/auth.type";
+import type {
+	IForgotPassword,
+	IGenerateOtp,
+	ISignIn,
+	ISignUp,
+} from "@/shared/types/auth/auth.type";
 
 class AuthService {
 	async signIn(payload: ISignIn): Promise<IUser> {
@@ -10,11 +15,7 @@ class AuthService {
 	}
 
 	async signUp(payload: ISignUp): Promise<IUser> {
-		console.log("good");
-		const res = (await instance.post(API.AUTH_SIGN_UP, payload)).data;
-		console.log(res);
-
-		return res;
+		return (await instance.post(API.AUTH_SIGN_UP, payload)).data;
 	}
 
 	async generateOtp(payload: IGenerateOtp): Promise<MassageResponse> {

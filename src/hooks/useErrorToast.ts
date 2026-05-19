@@ -3,16 +3,17 @@
 import { useState } from "react";
 
 export function useErrorToast(error: Error | null, isError?: boolean) {
-	const [closed, setClosed] = useState(false);
+	const [closedMessage, setClosedMessage] = useState<string | null>(null);
+	const message = error instanceof Error ? error.message : null;
 
 	const errorMessage =
-		!closed && (isError || error)
+		closedMessage !== message && (isError || error)
 			? error instanceof Error
 				? error.message
 				: "Unknown error"
 			: null;
 
-	const closeError = () => setClosed(true);
+	const closeError = () => setClosedMessage(errorMessage);
 
 	return { errorMessage, closeError };
 }

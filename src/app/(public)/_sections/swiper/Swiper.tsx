@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -9,9 +9,36 @@ import { IMAGE } from "@/config/image.config";
 import Image from "next/image";
 import SwiperButton from "./SwiperButton";
 import { useMouse } from "@/hooks";
+import { useSyncExternalStore } from "react";
+
+const subscribe = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
 
 export function Swiper() {
 	const { hasMouse } = useMouse();
+	const isClient = useSyncExternalStore(
+		subscribe,
+		getClientSnapshot,
+		getServerSnapshot,
+	);
+
+	if (!isClient) {
+		const [firstSlide] = IMAGE.PATH_IMAGE_SLIDER;
+
+		return (
+			<Image
+				src={firstSlide.src}
+				alt={firstSlide.alt}
+				width={0}
+				height={0}
+				sizes='100vw'
+				style={{ width: "100%", height: "auto" }}
+				priority
+			/>
+		);
+	}
+
 	return (
 		<SwiperRoot
 			modules={[Navigation, Pagination, Autoplay]}
