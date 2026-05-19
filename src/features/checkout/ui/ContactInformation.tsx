@@ -11,7 +11,9 @@ interface Props {
 export function ContactInformation({ register, errors, disabled }: Props) {
 	return (
 		<section className='flex flex-col gap-3 border-1 border-description_gray rounded-lg pt-10 pb-6 px-6'>
-			<h5 className='text-20 font-500 leading-140 pb-2'>Контактна інформація</h5>
+			<h5 className='text-20 font-500 leading-140 pb-2'>
+				Контактна інформація
+			</h5>
 			<div className='flex flex-row gap-2 sm:gap-3 md:gap-4 lg:gap-5 xl:gap-6 '>
 				<Input
 					variant='outlined'
@@ -35,8 +37,8 @@ export function ContactInformation({ register, errors, disabled }: Props) {
 				label='НОМЕР ТЕЛЕФОНУ'
 				placeholder='Номер телефону'
 				disabled={disabled}
-				errorMessage={errors.phone?.message}
-				{...register("phone")}
+				errorMessage={errors.phoneNumber?.message}
+				{...register("phoneNumber")}
 			/>
 			<Input
 				variant='outlined'
