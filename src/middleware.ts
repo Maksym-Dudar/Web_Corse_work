@@ -3,12 +3,12 @@ import { NEXT_PUBLIC_BACKEND_URL } from "@/config/env";
 import { API } from "./config";
 
 export async function middleware(request: NextRequest) {
-	const token = request.cookies.get("access_token")?.value;
+	// const token = request.cookies.get("access_token")?.value;
 
-    if (!token) {
-        console.log(token, "\n Nt valid")
-		return NextResponse.redirect(new URL("/sign-in", request.url));
-    }
+ //    if (!token) {
+ //        console.log(token, "\n Nt valid")
+	// 	return NextResponse.redirect(new URL("/sign-in", request.url));
+ //    }
     
 	return NextResponse.next();
 
