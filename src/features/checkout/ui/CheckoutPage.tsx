@@ -94,7 +94,7 @@ export function CheckoutPage() {
 				country: data.country,
 				state: data.state,
 				city: data.city,
-				phone: data.phone,
+				phoneNumber: data.phoneNumber,
 				buildingNumber: data.buildingNumber,
 				zipCode: data.zipCode,
 			};

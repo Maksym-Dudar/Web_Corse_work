@@ -96,8 +96,8 @@ export default function Address({ id }: Props) {
 				variant='outlined'
 				label='НОМЕР ТЕЛЕФОНУ'
 				placeholder='Номер телефону'
-				errorMessage={errors.phone?.message}
-				{...register("phone")}
+				errorMessage={errors.phoneNumber?.message}
+				{...register("phoneNumber")}
 			/>
 			<Button
 				type='submit'

@@ -3,7 +3,7 @@ import { z } from "zod";
 export const CheckoutSchema = z.object({
 	firstName: z.string().nonempty("Це поле обов'язкове"),
 	lastName: z.string().nonempty("Це поле обов'язкове"),
-	phone: z
+	phoneNumber: z
 		.string()
 		.length(10, "Номер телефону має містити рівно 10 символів")
 		.nonempty("Це поле обов'язкове"),

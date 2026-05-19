@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const AddressSchema = z.object({
 	name: z.string().nonempty("Це поле обов'язкове"),
-	phone: z
+	phoneNumber: z
 		.string()
 		.length(10, "Номер телефону має містити рівно 10 символів")
 		.nonempty("Це поле обов'язкове"),

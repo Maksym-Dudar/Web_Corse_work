@@ -15,7 +15,7 @@ export interface IAddressInfo {
 }
 export interface IAddressBase {
 	name: string;
-	phone: string;
+	phoneNumber: string;
 	country: string;
 	state: string;
 	city: string;
