@@ -29,7 +29,7 @@ export function AddressDashboard() {
 					{addressData?.map((val) => (
 						<AddressCard
 							key={val.id}
-							phoneNumber={val.phone}
+							phoneNumber={val.buildingNumber}
 							name={val.name}
 							address={
 								val.buildingNumber +
