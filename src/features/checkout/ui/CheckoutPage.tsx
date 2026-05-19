@@ -132,6 +132,13 @@ export function CheckoutPage() {
 		}
 	});
 
+			console.log("stripe:", stripe);
+		console.log("elements:", elements);
+		if (!stripe || !elements) {
+			return <div>Stripe loading...</div>;
+		}
+
+
 	if (isLoading) return <Loading />;
 if (!orderData) {
 	return (
