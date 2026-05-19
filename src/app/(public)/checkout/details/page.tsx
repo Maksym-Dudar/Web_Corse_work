@@ -1,6 +1,6 @@
 "use client"
 
-import { useCheckout } from "@/features/checkout/hook/useCheckout";
+import { CheckoutPage } from "@/features/checkout/ui/CheckoutPage";
 
 export default function Page() {
 	return (
