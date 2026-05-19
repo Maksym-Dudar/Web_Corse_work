@@ -22,8 +22,14 @@ export default function PaymentProvider({
 		retryDelay: 1000,
 	});
 
-	if (!data || !data?.clientSecret) return
-	
+	console.log("stripePromise: ", stripePromise);
+
+	if (!data || !data?.clientSecret) return (
+		<div className="">
+			тут все впало
+		</div>
+	)
+		
 	return (
 		<Elements stripe={stripePromise} options={data}>
 			{children}
