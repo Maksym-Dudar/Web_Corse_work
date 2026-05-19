@@ -22,6 +22,8 @@ export function useCheckout() {
 		queryKey: ["order", orderId],
 		queryFn: () => ordersService.getOrder(orderId),
 		enabled: !!orderId,
+		retry: 3,
+		retryDelay: 1000,
 	});
 	const {
 		addressData,
