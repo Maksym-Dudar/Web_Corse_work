@@ -25,6 +25,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { ordersService } from "@/services/requests";
 import type { IConfirmOrder } from "@/services/requests/orders/requests.type";
+import PaymentProvider from "@/provider/stripe/StripeProvider";
 
 export type TAddressMode = "existing" | "new";
 
