@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getCode, getNames } from "country-list";
 import { useSearchParams } from "next/navigation";
 import { useMemo } from "react";
+import { useOrder } from "./useOrder";
 
 export function useCheckout() {
 	const sp = useSearchParams();
@@ -13,18 +14,8 @@ export function useCheckout() {
 
 	const error = !orderId ? new Error("Замовлення не знайдено") : null;
 
-	const {
-		data: orderData,
-		isLoading: isLoadingOrder,
-		isError: isErrorOrder,
-		error: errorOrder,
-	} = useQuery({
-		queryKey: ["order", orderId],
-		queryFn: () => ordersService.getOrder(orderId),
-		enabled: !!orderId,
-		retry: 3,
-		retryDelay: 1000,
-	});
+	const { orderData, isLoadingOrder, isErrorOrder, errorOrder } =
+		useOrder(orderId);
 	const {
 		addressData,
 		isLoading: isLoadingAddress,
