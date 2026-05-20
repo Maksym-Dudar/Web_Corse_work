@@ -23,9 +23,9 @@ const geistInter = Inter({
 
 export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
 	return (
-		<html lang='uk'>
+		<html lang='uk' className="h-full">
 			<body
-				className={`${geistPoppins.variable} ${geistInter.variable} antialiased`}
+				className={`${geistPoppins.variable} ${geistInter.variable} antialiased w-full h-full`}
 			>
 				<Suspense>
 					<QueryProvider>

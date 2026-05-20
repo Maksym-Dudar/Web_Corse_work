@@ -32,55 +32,60 @@ export function SignUp() {
 			)}
 			<form
 				onSubmit={onSubmit}
-				className='flex flex-col w-full justify-center gap-8 pl-20 max-w-125'
+				className='flex flex-col w-full lg:w-fit h-full justify-center items-center gap-8 pl-0 lg:pl-10 xl:pl-20'
 			>
-				<section className='flex flex-col gap-6'>
-					<h2 className='text-40 font-500 leading-110'>{PAGE.SIGN_UP.label}</h2>
-					<p className='text-16 font-400 leading-160 font-inter text-description_grey'>
-						Вже маєте акаунт?{" "}
-						<Link href={PAGE.SIGN_IN.link} className='text-green'>
-							{PAGE.SIGN_IN.label}
-						</Link>
-					</p>
-				</section>
-				<section className='flex flex-col gap-4'>
-					<Input
-						placeholder="Введіть ім'я"
-						variant='borderless'
-						errorMessage={errors.firstName?.message}
-						{...register("firstName")}
-					/>
-					<Input
-						placeholder='Введіть email'
-						variant='borderless'
-						errorMessage={errors.email?.message}
-						{...register("email")}
-					/>
-					<PasswordInput
-						placeholder='Введіть пароль'
-						errorMessage={errors.password?.message}
-						{...register("password")}
-					/>
-					<PasswordInput
-						placeholder='Підтвердьте пароль'
-						errorMessage={errors.confirmPassword?.message}
-						{...register("confirmPassword")}
-					/>
-					<CheckBox
-						errorMessage={errors.isAgree?.message}
-						{...register("isAgree")}
-					>
-						<p className='text-16 font-400 leading-160 font-inter '>
-							Я погоджуюся з <b>Політикою конфіденційності</b> та <b>Умовами використання</b>
+				<div className='flex flex-col max-w-125 px-6 sm:px-0'>
+					<section className='flex flex-col gap-6 self-start'>
+						<h2 className='text-30 lg:text-40 font-500 leading-110'>
+							{PAGE.SIGN_UP.label}
+						</h2>
+						<p className='text-16 font-400 leading-160 font-inter text-description_grey '>
+							Вже маєте акаунт?{" "}
+							<Link href={PAGE.SIGN_IN.link} className='text-green'>
+								{PAGE.SIGN_IN.label}
+							</Link>
 						</p>
-					</CheckBox>
-				</section>
-				<Button
-					text={PAGE.SIGN_UP.label}
-					type='submit'
-					className='py-2'
-					disabled={isPending}
-				/>
+					</section>
+					<section className='flex flex-col gap-4'>
+						<Input
+							placeholder="Введіть ім'я"
+							variant='borderless'
+							errorMessage={errors.firstName?.message}
+							{...register("firstName")}
+						/>
+						<Input
+							placeholder='Введіть email'
+							variant='borderless'
+							errorMessage={errors.email?.message}
+							{...register("email")}
+						/>
+						<PasswordInput
+							placeholder='Введіть пароль'
+							errorMessage={errors.password?.message}
+							{...register("password")}
+						/>
+						<PasswordInput
+							placeholder='Підтвердьте пароль'
+							errorMessage={errors.confirmPassword?.message}
+							{...register("confirmPassword")}
+						/>
+						<CheckBox
+							errorMessage={errors.isAgree?.message}
+							{...register("isAgree")}
+						>
+							<p className='text-16 font-400 leading-160 font-inter '>
+								Я погоджуюся з <b>Політикою конфіденційності</b> та{" "}
+								<b>Умовами використання</b>
+							</p>
+						</CheckBox>
+					</section>
+					<Button
+						text={PAGE.SIGN_UP.label}
+						type='submit'
+						className='py-2'
+						disabled={isPending}
+					/>
+				</div>
 			</form>
 		</>
 	);

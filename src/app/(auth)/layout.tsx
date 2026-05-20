@@ -3,7 +3,7 @@ import type { PropsWithChildren } from "react";
 
 export default function Layout({ children }: PropsWithChildren<unknown>) {
     return (
-			<article className='flex overflow-hidden'>
+			<article className='flex overflow-hidden h-full w-full'>
 				<AsideBannerAuth />
 				{children}
 			</article>
