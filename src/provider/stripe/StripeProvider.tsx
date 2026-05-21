@@ -1,5 +1,6 @@
 "use client";
 
+import { Loading } from "@/components/widgets";
 import { usePayment } from "@/features/checkout/hook/usePayment";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -18,7 +19,7 @@ export default function PaymentProvider({
 	const { data, isLoading, error } = usePayment(orderId);
 
 	if (isLoading) {
-		return <div>Loading...</div>;
+		return <Loading />;
 	}
 
 	if (error) {
