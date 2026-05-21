@@ -10,7 +10,7 @@ export const CreateProductSchema = z.object({
 		.max(1, "Введіть значення від 0 до 1")
 		.min(0, "Введіть значення від 0 до 1")
 		.optional(),
-	title: z.string().nonempty("Це поле обов'язкове"),
+	title: z.string(),
 	measurements: z.string().nonempty("Це поле обов'язкове"),
 	price: z.number().min(0, "Це поле обов'язкове"),
 	quantityWarehouse: z.number().min(0, "Це поле обов'язкове"),
